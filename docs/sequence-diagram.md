@@ -10,36 +10,37 @@ title: Sequence Diagram
 ```mermaid
 sequenceDiagram
     actor User
-    participant Page as Page CSKH
+    participant Page as Page/Chat UI
+    participant Backend as Backend Server
     participant AI as AI Agent
-    participant KB as Knowledge Base
-    participant PR as Pull Request
+    participant KB as Knowledge Base (JSON)
     participant CSKH as Đội CSKH
-    participant DB as Database
+    participant DB as JSON DB
 
     User->>Page: Gửi tin nhắn mô tả vấn đề
-    Page->>AI: Forward tin nhắn
+    Page->>Backend: Forward tin nhắn (POST /api/chat)
+    Backend->>AI: Gọi hàm phân tích
     AI->>KB: Tra cứu tình huống tương tự
     KB-->>AI: Trả về case tương tự (match)
 
     rect rgb(200, 230, 200)
-        Note over AI,DB: Tình huống quen thuộc - Auto resolve
-        AI->>PR: Tạo Pull Request sửa DB
-        AI-->>Page: Thông báo đang xử lý
-        Page-->>User: "Chúng tôi đang xử lý..."
-        PR->>CSKH: Gửi PR để review
-        CSKH->>PR: Approve & Merge
-        PR->>DB: Cập nhật Database
-        DB-->>AI: Xác nhận cập nhật
-        AI-->>Page: Phản hồi kết quả
-        Page-->>User: Thông báo đã xử lý xong
+        Note over AI,DB: Tình huống quen thuộc - Tạo Mock PR
+        AI-->>Backend: Result {confidence: 0.9, db_changes}
+        Backend->>DB: Lưu tạm Mock PR state
+        Backend-->>Page: Trả về {status: "pending_review", diff: ...}
+        
+        Note over Page,CSKH: CSKH xem giao diện Diff trực tiếp trên web
+        Page-->>User: "Đang chờ nhân viên duyệt yêu cầu thay đổi..."
+        CSKH->>Page: Review Before/After -> Ấn Approve
+        Page->>Backend: POST /api/resolve-pr {approve: true}
+        Backend->>DB: Thực thi cập nhật giá trị mới
+        Backend-->>Page: {status: "merged"}
+        Page-->>User: "Yêu cầu đã được xử lý xong!"
     end
 
     rect rgb(200, 220, 240)
-        Note over CSKH,KB: Feedback loop - AI học tập
-        CSKH->>AI: Đẩy dữ liệu case đã resolve
-        AI->>KB: Cập nhật Knowledge Base
-        Note over KB: Thêm vào bộ tình huống mẫu
+        Note over CSKH,KB: Feedback (Chỉ mang tính mô phỏng ở Hackathon)
+        CSKH->>KB: Có thể hardcode thêm case mới vào file json sau
     end
 ```
 
