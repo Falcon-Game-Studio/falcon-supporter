@@ -4,6 +4,11 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
+    "docs": "docusaurus start",
+    "dev": "npm run dev:concurrent",
+    "dev:concurrent": "npx concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "dev:frontend": "cd frontend && npm start",
+    "dev:backend": "cd backend && npm start",
     "start": "docusaurus start",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",

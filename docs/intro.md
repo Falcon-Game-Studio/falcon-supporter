@@ -12,7 +12,7 @@ title: Giới thiệu
 - **Tự động hóa**: AI Agent tự động chat với user, nhận diện vấn đề và đề xuất giải pháp
 - **Tự học**: AI liên tục học từ các case đã resolve để nâng cao khả năng xử lý
 - **Giảm tải**: Giảm khối lượng công việc cho đội CSKH bằng cách tự động xử lý các tình huống quen thuộc
-- **Kiểm soát**: Mọi thay đổi DB đều phải qua Pull Request để đội CSKH review
+- **Kiểm soát**: Mọi thay đổi DB đều phải qua một giao diện "Mock Pull Request" trên màn hình Frontend thay vì GitHub thật, để đội CSKH review giá trị trước và sau khi thay đổi.
 
 ## Các thành phần chính
 
@@ -21,4 +21,4 @@ title: Giới thiệu
 | **Page CSKH** | Giao diện chat để user gửi tin nhắn |
 | **AI Agent** | Xử lý tin nhắn, phân tích vấn đề, đề xuất giải pháp |
 | **Knowledge Base** | Cơ sở dữ liệu các tình huống mẫu đã resolve |
-| **Đội CSKH** | Review PR, xử lý case mới, cập nhật knowledge base |
+| **Đội CSKH** | Review thay đổi trên UI Diff, xử lý case mới |
