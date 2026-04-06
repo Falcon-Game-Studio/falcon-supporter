@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Falcon Supporter — CSKH AI</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; height: 100vh; }
+
+    /* ===== Auth Screen ===== */
+    .screen { display: none; }
+    .screen.active { display: flex; }
+
+    #auth-screen {
+      justify-content: center; align-items: center; height: 100vh;
+      background: linear-gradient(135deg, #1e3a5f 0%, #1e40af 100%);
+    }
+    .auth-card {
+      background: #fff; padding: 48px 40px; border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.2); text-align: center; width: 420px;
+    }
+    .auth-card h1 { font-size: 28px; margin-bottom: 4px; color: #1e40af; }
+    .auth-card .subtitle { color: #6b7280; margin-bottom: 32px; font-size: 14px; }
+    .auth-card input {
+      width: 100%; padding: 12px 16px; border: 2px solid #e5e7eb; border-radius: 10px;
+      font-size: 15px; outline: none; transition: border .2s;
+    }
+    .auth-card input:focus { border-color: #2563eb; }
+    .auth-card button {
+      width: 100%; padding: 12px; margin-top: 16px; background: #2563eb; color: #fff;
+      border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer;
+      transition: background .2s;
+    }
+    .auth-card button:hover { background: #1d4ed8; }
+    .auth-error { color: #dc2626; font-size: 13px; margin-top: 12px; min-height: 18px; }
+
+    /* ===== Main Screen ===== */
+    #main-screen { flex-direction: column; height: 100vh; }
+
+    .header {
+      background: #1e40af; color: #fff; padding: 12px 20px;
+      display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+    }
+    .header h2 { font-size: 16px; font-weight: 600; }
+    .header .player-badge {
+      background: rgba(255,255,255,.15); padding: 4px 12px; border-radius: 20px; font-size: 13px;
+    }
+    .header button {
+      background: rgba(255,255,255,.15); color: #fff; border: none; padding: 6px 14px;
+      border-radius: 8px; cursor: pointer; font-size: 13px;
+    }
+    .header button:hover { background: rgba(255,255,255,.25); }
+
+    /* Tabs */
+    .tabs { display: flex; background: #dbeafe; flex-shrink: 0; }
+    .tab {
+      flex: 1; padding: 10px; border: none; background: transparent; cursor: pointer;
+      font-size: 14px; font-weight: 500; color: #64748b; border-bottom: 2px solid transparent;
+      transition: all .2s;
+    }
+    .tab.active { background: #fff; color: #2563eb; border-bottom-color: #2563eb; }
+    .tab:hover:not(.active) { background: rgba(255,255,255,.5); }
+
+    /* Panels */
+    .panel { display: none; flex: 1; flex-direction: column; overflow: hidden; }
+    .panel.active { display: flex; }
+
+    /* ===== Chat ===== */
+    .messages { flex: 1; overflow-y: auto; padding: 16px 20px; }
+    .msg { display: flex; margin-bottom: 14px; align-items: flex-end; gap: 8px; }
+    .msg.user { justify-content: flex-end; }
+    .msg.system { justify-content: center; }
+
+    .bubble {
+      max-width: 72%; padding: 10px 14px; border-radius: 16px; line-height: 1.55;
+      font-size: 14px; white-space: pre-wrap; word-break: break-word;
+    }
+    .msg.user .bubble { background: #2563eb; color: #fff; border-bottom-right-radius: 4px; }
+    .msg.ai .bubble { background: #fff; color: #1f2937; border-bottom-left-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+    .msg.system .bubble { background: #fef3c7; color: #92400e; font-size: 13px; border-radius: 8px; }
+
+    /* Review card inside chat */
+    .review-card {
+      background: #fffbeb; border: 1px solid #fbbf24; border-radius: 10px;
+      padding: 14px; margin-top: 8px; max-width: 400px;
+    }
+    .review-card h4 { font-size: 13px; color: #92400e; margin-bottom: 8px; }
+    .diff { font-family: 'Cascadia Code', 'Fira Code', Consolas, monospace; font-size: 13px; margin-bottom: 8px; }
+    .diff-line { padding: 3px 8px; border-radius: 4px; margin: 2px 0; }
+    .diff-before { background: #fee2e2; color: #991b1b; }
+    .diff-after { background: #dcfce7; color: #166534; }
+    .diff-reason { font-size: 12px; color: #78716c; margin-bottom: 10px; }
+    .review-actions { display: flex; gap: 8px; }
+    .review-actions button {
+      flex: 1; padding: 8px; border: none; border-radius: 8px; font-size: 13px;
+      font-weight: 600; cursor: pointer; transition: opacity .2s;
+    }
+    .review-actions button:disabled { opacity: .5; cursor: not-allowed; }
+    .btn-approve { background: #10b981; color: #fff; }
+    .btn-approve:hover:not(:disabled) { background: #059669; }
+    .btn-reject { background: #ef4444; color: #fff; }
+    .btn-reject:hover:not(:disabled) { background: #dc2626; }
+
+    .review-card.resolved { opacity: .7; }
+    .review-card.resolved .review-actions button { display: none; }
+    .review-status { font-size: 12px; font-weight: 600; margin-top: 4px; }
+    .review-status.merged { color: #059669; }
+    .review-status.rejected { color: #dc2626; }
+
+    /* Input area */
+    .input-area {
+      display: flex; padding: 12px 20px; border-top: 1px solid #e5e7eb; background: #fff;
+      flex-shrink: 0; gap: 8px;
+    }
+    .input-area input {
+      flex: 1; padding: 10px 14px; border: 2px solid #e5e7eb; border-radius: 10px;
+      font-size: 14px; outline: none; transition: border .2s;
+    }
+    .input-area input:focus { border-color: #2563eb; }
+    .input-area button {
+      padding: 10px 24px; background: #2563eb; color: #fff; border: none;
+      border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer;
+      transition: background .2s;
+    }
+    .input-area button:hover { background: #1d4ed8; }
+    .input-area button:disabled { background: #93c5fd; cursor: not-allowed; }
+
+    /* Loading dots */
+    .loading-dots::after {
+      content: ''; animation: dots 1.2s steps(4) infinite;
+    }
+    @keyframes dots {
+      0% { content: ''; }
+      25% { content: '.'; }
+      50% { content: '..'; }
+      75% { content: '...'; }
+    }
+
+    /* ===== CSKH Review Panel ===== */
+    .reviews-container { flex: 1; overflow-y: auto; padding: 20px; }
+    .reviews-empty { text-align: center; color: #9ca3af; padding: 60px 20px; font-size: 14px; }
+    .review-item {
+      background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.06); border-left: 4px solid #fbbf24;
+    }
+    .review-item .ri-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
+    .review-item .ri-id { font-weight: 700; color: #1e40af; font-size: 14px; }
+    .review-item .ri-time { font-size: 12px; color: #9ca3af; }
+    .review-item .ri-player { font-size: 13px; color: #6b7280; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+
+<!-- ===== Auth Screen ===== -->
+<div id="auth-screen" class="screen active">
+  <div class="auth-card">
+    <h1>🦅 Falcon Supporter</h1>
+    <p class="subtitle">Hệ thống Chăm sóc Khách hàng AI — Falcon Game Studio</p>
+    <input type="text" id="pid-input" placeholder="Nhập Player ID (vd: P001)" autofocus />
+    <button id="auth-btn">Xác nhận</button>
+    <p class="auth-error" id="auth-error"></p>
+  </div>
+</div>
+
+<!-- ===== Main Screen ===== -->
+<div id="main-screen" class="screen">
+  <div class="header">
+    <h2>🦅 Falcon Supporter</h2>
+    <span class="player-badge" id="player-badge"></span>
+    <button id="logout-btn">Đăng xuất</button>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="chat">💬 Chat hỗ trợ</button>
+    <button class="tab" data-tab="reviews">📋 CSKH Review</button>
+  </div>
+
+  <!-- Chat Panel -->
+  <div id="chat-panel" class="panel active">
+    <div class="messages" id="messages"></div>
+    <div class="input-area">
+      <input type="text" id="msg-input" placeholder="Mô tả vấn đề bạn gặp phải..." />
+      <button id="send-btn">Gửi</button>
+    </div>
+  </div>
+
+  <!-- Review Panel -->
+  <div id="review-panel" class="panel">
+    <div class="reviews-container" id="reviews-container">
+      <div class="reviews-empty">Đang tải...</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== Config =====
+const API = window.location.origin; // backend serves this page
+let currentPlayer = null;
+
+// ===== DOM =====
+const $ = id => document.getElementById(id);
+const authScreen = $('auth-screen');
+const mainScreen = $('main-screen');
+const pidInput = $('pid-input');
+const authError = $('auth-error');
+const playerBadge = $('player-badge');
+const messagesDiv = $('messages');
+const msgInput = $('msg-input');
+const sendBtn = $('send-btn');
+const reviewsContainer = $('reviews-container');
+
+// ===== Auth =====
+async function login(playerId) {
+  authError.textContent = '';
+  try {
+    const res = await fetch(`${API}/api/auth`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ player_id: playerId }),
+    });
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.error || 'Lỗi xác thực');
+    }
+    const data = await res.json();
+    currentPlayer = data.player;
+    localStorage.setItem('player_id', playerId);
+
+    // Switch screen
+    authScreen.classList.remove('active');
+    mainScreen.classList.add('active');
+    playerBadge.textContent = `${currentPlayer.username} (${currentPlayer.id}) · Gold: ${parseInt(currentPlayer.gold).toLocaleString()} · Lv.${currentPlayer.level}`;
+
+    // Load history
+    messagesDiv.innerHTML = '';
+    if (data.history.length === 0) {
+      addSystemMsg(`Xin chào ${currentPlayer.username}! Hãy mô tả vấn đề bạn gặp phải, tôi sẽ hỗ trợ bạn.`);
+    } else {
+      data.history.forEach(m => addBubble(m.role, m.message));
+    }
+    scrollDown();
+  } catch (e) {
+    authError.textContent = e.message;
+  }
+}
+
+function logout() {
+  localStorage.removeItem('player_id');
+  currentPlayer = null;
+  mainScreen.classList.remove('active');
+  authScreen.classList.add('active');
+  pidInput.value = '';
+  messagesDiv.innerHTML = '';
+}
+
+// ===== Chat =====
+const POLL_INTERVAL = 2000; // ms
+const POLL_TIMEOUT = 120000; // 2 min max wait
+
+async function sendMessage() {
+  const text = msgInput.value.trim();
+  if (!text || !currentPlayer) return;
+
+  msgInput.value = '';
+  sendBtn.disabled = true;
+  addBubble('user', text);
+
+  // Loading indicator
+  const loadingId = addLoading();
+  scrollDown();
+
+  try {
+    // Step 1: Submit message → get request_id
+    const res = await fetch(`${API}/api/chat`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ player_id: currentPlayer.id, message: text }),
+    });
+    if (!res.ok) throw new Error('Lỗi server');
+    const { request_id } = await res.json();
+
+    // Step 2: Poll for AI response
+    const data = await pollForResponse(request_id);
+    removeLoading(loadingId);
+
+    if (!data) {
+      addSystemMsg('⏰ AI Agent chưa phản hồi. Vui lòng kiểm tra terminal Copilot và thử lại.');
+    } else {
+      addBubble('ai', data.reply, data.review);
+      if (data.status === 'escalated') {
+        addSystemMsg('⚠️ Vấn đề đã được chuyển cho đội CSKH xử lý thủ công.');
+      }
+      refreshPlayerInfo();
+    }
+  } catch {
+    removeLoading(loadingId);
+    addSystemMsg('❌ Có lỗi xảy ra, vui lòng thử lại.');
+  }
+
+  sendBtn.disabled = false;
+  msgInput.focus();
+  scrollDown();
+}
+
+async function pollForResponse(requestId) {
+  const start = Date.now();
+  while (Date.now() - start < POLL_TIMEOUT) {
+    try {
+      const res = await fetch(`${API}/api/chat/status/${requestId}`);
+      const data = await res.json();
+      if (data.status !== 'waiting_for_ai') return data;
+    } catch { /* retry */ }
+    await new Promise(r => setTimeout(r, POLL_INTERVAL));
+  }
+  return null; // timeout
+}
+
+// ===== Review (CSKH) =====
+async function loadReviews() {
+  try {
+    const res = await fetch(`${API}/api/pending-reviews`);
+    const data = await res.json();
+    renderReviews(data.reviews);
+  } catch {
+    reviewsContainer.innerHTML = '<div class="reviews-empty">Lỗi kết nối server.</div>';
+  }
+}
+
+async function resolveReview(reviewId, action) {
+  try {
+    const res = await fetch(`${API}/api/resolve-pr`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ review_id: reviewId, action }),
+    });
+    const data = await res.json();
+
+    // Update inline review card in chat
+    const card = document.querySelector(`[data-review="${reviewId}"]`);
+    if (card) {
+      card.classList.add('resolved');
+      const statusEl = card.querySelector('.review-status');
+      if (data.status === 'merged') {
+        statusEl.textContent = '✅ Đã duyệt — DB đã được cập nhật';
+        statusEl.className = 'review-status merged';
+      } else {
+        statusEl.textContent = '❌ Đã từ chối';
+        statusEl.className = 'review-status rejected';
+      }
+    }
+
+    if (data.status === 'merged') {
+      addSystemMsg(`✅ Review ${reviewId} đã được duyệt. Database đã cập nhật thành công!`);
+      refreshPlayerInfo();
+    } else {
+      addSystemMsg(`❌ Review ${reviewId} đã bị từ chối.`);
+    }
+
+    loadReviews();
+    scrollDown();
+  } catch {
+    addSystemMsg('❌ Lỗi khi xử lý review.');
+  }
+}
+
+async function refreshPlayerInfo() {
+  if (!currentPlayer) return;
+  try {
+    const res = await fetch(`${API}/api/auth`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ player_id: currentPlayer.id }),
+    });
+    const data = await res.json();
+    currentPlayer = data.player;
+    playerBadge.textContent = `${currentPlayer.username} (${currentPlayer.id}) · Gold: ${parseInt(currentPlayer.gold).toLocaleString()} · Lv.${currentPlayer.level}`;
+  } catch { /* ignore */ }
+}
+
+// ===== UI Helpers =====
+function addBubble(role, text, review) {
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+  bubble.textContent = text;
+  div.appendChild(bubble);
+
+  messagesDiv.appendChild(div);
+
+  // Attach review card if present
+  if (review) {
+    const card = createReviewCard(review);
+    const wrapper = document.createElement('div');
+    wrapper.className = 'msg ai';
+    wrapper.appendChild(card);
+    messagesDiv.appendChild(wrapper);
+  }
+
+  scrollDown();
+}
+
+function addSystemMsg(text) {
+  const div = document.createElement('div');
+  div.className = 'msg system';
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+  bubble.textContent = text;
+  div.appendChild(bubble);
+  messagesDiv.appendChild(div);
+  scrollDown();
+}
+
+let loadingCounter = 0;
+function addLoading() {
+  const id = `loading-${++loadingCounter}`;
+  const div = document.createElement('div');
+  div.className = 'msg ai';
+  div.id = id;
+  div.innerHTML = '<div class="bubble"><span class="loading-dots">AI đang xử lý</span></div>';
+  messagesDiv.appendChild(div);
+  return id;
+}
+function removeLoading(id) {
+  const el = document.getElementById(id);
+  if (el) el.remove();
+}
+
+function createReviewCard(review) {
+  const card = document.createElement('div');
+  card.className = 'review-card';
+  card.dataset.review = review.review_id;
+  card.innerHTML = `
+    <h4>📋 Đề xuất thay đổi — ${review.review_id}</h4>
+    <div class="diff">
+      <div class="diff-line diff-before">- ${review.field}: ${review.before}</div>
+      <div class="diff-line diff-after">+ ${review.field}: ${review.after}</div>
+    </div>
+    <div class="diff-reason">Lý do: ${review.reason}</div>
+    <div class="review-actions">
+      <button class="btn-approve" onclick="resolveReview('${review.review_id}','approve')">✅ Approve</button>
+      <button class="btn-reject" onclick="resolveReview('${review.review_id}','reject')">❌ Reject</button>
+    </div>
+    <div class="review-status"></div>
+  `;
+  return card;
+}
+
+function renderReviews(reviews) {
+  if (reviews.length === 0) {
+    reviewsContainer.innerHTML = '<div class="reviews-empty">Không có yêu cầu nào đang chờ duyệt 🎉</div>';
+    return;
+  }
+  reviewsContainer.innerHTML = reviews.map(r => `
+    <div class="review-item">
+      <div class="ri-header">
+        <span class="ri-id">${r.review_id}</span>
+        <span class="ri-time">${new Date(r.created_at).toLocaleString('vi-VN')}</span>
+      </div>
+      <div class="ri-player">Player: ${r.player_id}</div>
+      <div class="diff">
+        <div class="diff-line diff-before">- ${r.field}: ${r.before}</div>
+        <div class="diff-line diff-after">+ ${r.field}: ${r.after}</div>
+      </div>
+      <div class="diff-reason">Lý do: ${r.reason}</div>
+      <div class="review-actions">
+        <button class="btn-approve" onclick="resolveReview('${r.review_id}','approve')">✅ Approve</button>
+        <button class="btn-reject" onclick="resolveReview('${r.review_id}','reject')">❌ Reject</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function scrollDown() {
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+// ===== Tab Switching =====
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    const target = tab.dataset.tab;
+    document.getElementById(`${target}-panel`).classList.add('active');
+    if (target === 'reviews') loadReviews();
+  });
+});
+
+// ===== Event Listeners =====
+$('auth-btn').addEventListener('click', () => login(pidInput.value.trim()));
+pidInput.addEventListener('keydown', e => { if (e.key === 'Enter') login(pidInput.value.trim()); });
+sendBtn.addEventListener('click', sendMessage);
+msgInput.addEventListener('keydown', e => { if (e.key === 'Enter') sendMessage(); });
+$('logout-btn').addEventListener('click', logout);
+
+// ===== Auto-login from localStorage =====
+(function init() {
+  const saved = localStorage.getItem('player_id');
+  if (saved) login(saved);
+})();
+</script>
+
+</body>
+</html>

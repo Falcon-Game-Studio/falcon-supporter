@@ -1,0 +1,14 @@
+{
+  "request_id": "REQ-1775496458886-g5xj",
+  "player_id": "P001",
+  "reply": "Chào bạn DragonSlayer, tôi đã ghi nhận rằng bạn đã nạp tiền nhưng chưa nhận được 500 vàng. Tôi sẽ kiểm tra giao dịch và hoàn trả cho bạn số vàng này.",
+  "confidence": 0.9,
+  "db_changes": {
+    "player_id": "P001",
+    "field": "gold",
+    "before": 15000,
+    "after": 15500,
+    "reason": "Hoàn trả 500 vàng do nạp tiền nhưng chưa nhận được"
+  },
+  "responded_at": "2026-04-06T17:27:43.502Z"
+}

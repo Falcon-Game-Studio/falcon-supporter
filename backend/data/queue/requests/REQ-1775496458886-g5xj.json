@@ -1,0 +1,15 @@
+{
+  "request_id": "REQ-1775496458886-g5xj",
+  "player_id": "P001",
+  "player_data": {
+    "id": "P001",
+    "username": "DragonSlayer",
+    "gold": "15000",
+    "level": "45",
+    "status": "active",
+    "last_login": "2026-04-05"
+  },
+  "message": "Tôi đã nạp tiền nhưng dường như có vẻ tôi bị thiếu 500 vàng thì phải",
+  "created_at": "2026-04-06T17:27:38.886Z",
+  "status": "pending"
+}

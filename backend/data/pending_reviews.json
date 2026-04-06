@@ -1,0 +1,24 @@
+[
+  {
+    "review_id": "R001",
+    "request_id": "REQ-1775495965891-3u4q",
+    "player_id": "P001",
+    "field": "gold",
+    "before": 15000,
+    "after": 15500,
+    "reason": "Hoàn 500 gold — Kiểm tra log và hoàn trả gold bị mất cho người chơi",
+    "status": "pending",
+    "created_at": "2026-04-06T17:19:28.899Z"
+  },
+  {
+    "review_id": "R002",
+    "request_id": "REQ-1775496458886-g5xj",
+    "player_id": "P001",
+    "field": "gold",
+    "before": 15000,
+    "after": 15500,
+    "reason": "Hoàn trả 500 vàng do nạp tiền nhưng chưa nhận được",
+    "status": "merged",
+    "created_at": "2026-04-06T17:27:44.936Z"
+  }
+]

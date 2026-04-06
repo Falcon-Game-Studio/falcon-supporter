@@ -1,0 +1,15 @@
+{
+  "request_id": "REQ-1775496380554-1o1p",
+  "player_id": "P001",
+  "player_data": {
+    "id": "P001",
+    "username": "DragonSlayer",
+    "gold": "15000",
+    "level": "45",
+    "status": "active",
+    "last_login": "2026-04-05"
+  },
+  "message": "¿Se ha bloqueado alguna cuenta?",
+  "created_at": "2026-04-06T17:26:20.554Z",
+  "status": "pending"
+}

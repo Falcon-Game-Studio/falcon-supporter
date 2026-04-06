@@ -1,0 +1,37 @@
+[
+  {
+    "id": "KB001",
+    "keywords": ["mất gold", "gold biến mất", "trừ gold", "mất vàng", "bị trừ gold"],
+    "problem": "Người chơi bị mất gold sau update hoặc lỗi hệ thống",
+    "solution": "Kiểm tra log và hoàn trả gold bị mất cho người chơi",
+    "db_changes": { "field": "gold", "action": "add" }
+  },
+  {
+    "id": "KB002",
+    "keywords": ["bị ban", "banned", "khóa tài khoản", "không đăng nhập được", "bị khóa"],
+    "problem": "Tài khoản người chơi bị khóa (banned) do vi phạm hoặc nhầm lẫn",
+    "solution": "Kiểm tra lý do ban, nếu ban nhầm thì mở khóa tài khoản",
+    "db_changes": { "field": "status", "action": "set", "value": "active" }
+  },
+  {
+    "id": "KB003",
+    "keywords": ["sai level", "level bị giảm", "mất level", "level sai"],
+    "problem": "Level người chơi bị hiển thị sai hoặc bị giảm sau cập nhật",
+    "solution": "Điều chỉnh level về đúng giá trị trước khi xảy ra lỗi",
+    "db_changes": { "field": "level", "action": "set" }
+  },
+  {
+    "id": "KB004",
+    "keywords": ["đổi tên", "đổi username", "sửa tên", "tên sai"],
+    "problem": "Người chơi muốn đổi tên nhân vật (username)",
+    "solution": "Cập nhật username mới cho người chơi sau khi xác nhận",
+    "db_changes": { "field": "username", "action": "set" }
+  },
+  {
+    "id": "KB005",
+    "keywords": ["nạp gold", "nạp tiền không nhận", "nạp mà không có", "mua gold"],
+    "problem": "Người chơi đã nạp tiền nhưng không nhận được gold",
+    "solution": "Kiểm tra giao dịch và cộng gold tương ứng cho người chơi",
+    "db_changes": { "field": "gold", "action": "add" }
+  }
+]

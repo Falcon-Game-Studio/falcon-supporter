@@ -1,0 +1,75 @@
+{
+  "P001": [
+    {
+      "role": "user",
+      "message": "when was the last time I logged into the game?",
+      "timestamp": "2026-04-06T17:18:52.620Z"
+    },
+    {
+      "role": "ai",
+      "message": "Xin lỗi DragonSlayer, tôi chưa thể nhận diện vấn đề của bạn. Đang chuyển cho đội CSKH hỗ trợ trực tiếp.",
+      "request_id": "REQ-1775495932621-blbu",
+      "timestamp": "2026-04-06T17:18:53.680Z"
+    },
+    {
+      "role": "user",
+      "message": "Toi bi mat 500 gold sau khi update",
+      "timestamp": "2026-04-06T17:19:10.538Z"
+    },
+    {
+      "role": "ai",
+      "message": "Xin lỗi DragonSlayer, tôi chưa thể nhận diện vấn đề của bạn. Đang chuyển cho đội CSKH hỗ trợ trực tiếp.",
+      "request_id": "REQ-1775495950538-q5y2",
+      "timestamp": "2026-04-06T17:19:11.743Z"
+    },
+    {
+      "role": "user",
+      "message": "Tôi bị mất 500 gold sau khi update",
+      "timestamp": "2026-04-06T17:19:25.891Z"
+    },
+    {
+      "role": "ai",
+      "message": "Xin chào DragonSlayer! Tôi đã kiểm tra tài khoản của bạn.\n\n📊 Gold hiện tại: 15,000\n📊 Level: 45\n\nTôi nhận thấy: \"Người chơi bị mất gold sau update hoặc lỗi hệ thống\".\n→ Đề xuất hoàn trả **500 gold** cho bạn.\nYêu cầu này cần đội CSKH duyệt trước khi áp dụng.",
+      "request_id": "REQ-1775495965891-3u4q",
+      "timestamp": "2026-04-06T17:19:27.821Z"
+    },
+    {
+      "role": "user",
+      "message": "test",
+      "timestamp": "2026-04-06T17:23:25.637Z"
+    },
+    {
+      "role": "user",
+      "message": "when was the last time I logged into the game?",
+      "timestamp": "2026-04-06T17:24:55.038Z"
+    },
+    {
+      "role": "ai",
+      "message": "Lần đăng nhập gần nhất của bạn vào game là vào ngày 05 tháng 04 năm 2026.",
+      "request_id": "REQ-1775496295038-6wnv",
+      "timestamp": "2026-04-06T17:24:59.959Z"
+    },
+    {
+      "role": "user",
+      "message": "¿Se ha bloqueado alguna cuenta?",
+      "timestamp": "2026-04-06T17:26:20.554Z"
+    },
+    {
+      "role": "ai",
+      "message": "Chào bạn DragonSlayer, tài khoản của bạn hiện đang hoạt động và không bị khóa. Nếu bạn gặp vấn đề gì khác, hãy cho tôi biết để tôi có thể hỗ trợ bạn tốt hơn.",
+      "request_id": "REQ-1775496380554-1o1p",
+      "timestamp": "2026-04-06T17:26:24.872Z"
+    },
+    {
+      "role": "user",
+      "message": "Tôi đã nạp tiền nhưng dường như có vẻ tôi bị thiếu 500 vàng thì phải",
+      "timestamp": "2026-04-06T17:27:38.886Z"
+    },
+    {
+      "role": "ai",
+      "message": "Chào bạn DragonSlayer, tôi đã ghi nhận rằng bạn đã nạp tiền nhưng chưa nhận được 500 vàng. Tôi sẽ kiểm tra giao dịch và hoàn trả cho bạn số vàng này.",
+      "request_id": "REQ-1775496458886-g5xj",
+      "timestamp": "2026-04-06T17:27:43.502Z"
+    }
+  ]
+}
