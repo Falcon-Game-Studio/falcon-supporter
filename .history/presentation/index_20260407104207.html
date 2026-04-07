@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Falcon Supporter - Presentation</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/night.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+    <style>
+        :root {
+            --falcon-green: #4CAF50;
+            --falcon-blue: #2196F3;
+            --falcon-orange: #FF9800;
+            --falcon-purple: #9C27B0;
+        }
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: none;
+        }
+        .reveal h1 { font-size: 1.8em; }
+        .reveal h2 { font-size: 1.35em; }
+        .reveal h3 { font-size: 1em; }
+        .reveal .slides section {
+            text-align: left;
+            box-sizing: border-box;
+            overflow: hidden;
+            padding: 20px 40px;
+            height: 100%;
+        }
+        .reveal .slides section.center-slide {
+            text-align: center;
+        }
+        .reveal .slides {
+            width: 960px !important;
+            height: 700px !important;
+        }
+        .reveal ul, .reveal ol { font-size: 0.72em; margin: 0; }
+        .reveal li { margin-bottom: 0.2em; line-height: 1.3; }
+        .reveal p { margin: 0.3em 0; font-size: 0.75em; }
+        .reveal table {
+            font-size: 0.62em;
+            margin: 0.3em auto;
+        }
+        .reveal table th {
+            background: rgba(255,255,255,0.1);
+        }
+        .reveal table td, .reveal table th {
+            padding: 0.25em 0.5em;
+            border: 1px solid rgba(255,255,255,0.2);
+            white-space: nowrap;
+        }
+        .reveal pre {
+            font-size: 0.55em;
+            margin: 0.3em 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.1em 0.5em;
+            border-radius: 4px;
+            font-size: 0.65em;
+            font-weight: bold;
+            color: #fff;
+        }
+        .badge-green { background: var(--falcon-green); }
+        .badge-blue { background: var(--falcon-blue); }
+        .badge-orange { background: var(--falcon-orange); }
+        .badge-purple { background: var(--falcon-purple); }
+        .highlight-box {
+            background: rgba(255,255,255,0.08);
+            border-left: 4px solid var(--falcon-blue);
+            padding: 0.35em 0.7em;
+            margin: 0.3em 0;
+            border-radius: 4px;
+            font-size: 0.7em;
+            line-height: 1.35;
+        }
+        .team-card {
+            background: rgba(255,255,255,0.06);
+            border-radius: 8px;
+            padding: 0.35em 0.8em;
+            margin: 0.3em 0;
+            border-left: 4px solid;
+        }
+        .team-a { border-color: var(--falcon-purple); }
+        .team-b { border-color: var(--falcon-green); }
+        .team-c { border-color: var(--falcon-orange); }
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.6em;
+        }
+        .three-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.5em;
+        }
+        .formula-box {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            padding: 0.5em 0.8em;
+            margin: 0.3em 0;
+            text-align: center;
+            font-size: 0.85em;
+        }
+        .reveal .slide-number { font-size: 14px; }
+        .mermaid-container {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: 0.5em;
+            margin: 0.3em 0;
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .mermaid-container svg {
+            max-width: 100%;
+            max-height: 420px;
+            height: auto;
+        }
+        .member-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4em;
+            flex-shrink: 0;
+        }
+        .member-row {
+            display: flex;
+            align-items: center;
+            gap: 0.6em;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- ============== SLIDE 1: Title ============== -->
+            <section class="center-slide" data-background-gradient="linear-gradient(135deg, #0d1117 0%, #161b22 50%, #1a1f2e 100%)">
+                <img src="falcon-icon.png" alt="Falcon" style="width: 94px; height: 94px; border-radius: 20px; margin-bottom: 0.3em;" />
+                <h1 style="color: var(--falcon-green); margin-top: 0.2em;">Falcon Supporter</h1>
+                <p style="font-size: 0.85em; color: #ccc;">Hệ thống CSKH thông minh tích hợp AI Agent</p>
+                <p style="font-size: 0.65em; color: #666; margin-top: 1.5em;">
+                    Falcon Game Studio
+                </p>
+            </section>
+
+            <!-- ============== SLIDE 2: Team ============== -->
+            <section>
+                <h2>👥 Đội ngũ phát triển</h2>
+                <div class="team-card team-a">
+                    <div class="member-row">
+                        <div class="member-avatar">🧭</div>
+                        <div>
+                            <strong style="color: var(--falcon-purple); font-size: 0.85em;">Nguyễn Gia Phước</strong>
+                            <span class="badge badge-purple" style="margin-left: 0.4em;">Lead</span>
+                            <p style="margin: 0.15em 0 0; font-size: 0.68em; color: #bbb;">Tích hợp AI API &bull; Phân chia đầu việc &bull; Định hướng kiến trúc</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-card team-b">
+                    <div class="member-row">
+                        <div class="member-avatar">🎨</div>
+                        <div>
+                            <strong style="color: var(--falcon-green); font-size: 0.85em;">Vũ Ngọc Anh</strong>
+                            <span class="badge badge-green" style="margin-left: 0.4em;">Frontend</span>
+                            <p style="margin: 0.15em 0 0; font-size: 0.68em; color: #bbb;">Chat UI &bull; Giao diện Review Diff &bull; Kết nối User ↔ CSKH</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-card team-c">
+                    <div class="member-row">
+                        <div class="member-avatar">⚙️</div>
+                        <div>
+                            <strong style="color: var(--falcon-orange); font-size: 0.85em;">Vương Tuấn Kiệt</strong>
+                            <span class="badge badge-orange" style="margin-left: 0.4em;">Backend</span>
+                            <p style="margin: 0.15em 0 0; font-size: 0.68em; color: #bbb;">REST API &bull; DB logic &bull; Giả lập PR &bull; Tương tác AI Agent</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mermaid-container" style="margin-top: 0.5em;">
+                    <div class="mermaid">
+                    graph LR
+                        P["🧭 Phước<br/>AI API + Lead"]
+                        A["🎨 Ngọc Anh<br/>Frontend"]
+                        K["⚙️ Tuấn Kiệt<br/>Backend"]
+                        P -- "định hướng" --> A
+                        P -- "định hướng" --> K
+                        A -- "REST API" --> K
+                        K -- "AI call" --> P
+                        style P fill:#9C27B0,color:#fff,stroke:#333
+                        style A fill:#4CAF50,color:#fff,stroke:#333
+                        style K fill:#FF9800,color:#fff,stroke:#333
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============== SLIDE 3: Problem (visual) ============== -->
+            <section>
+                <h2>Vấn đề</h2>
+                <div class="mermaid-container">
+                    <div class="mermaid">
+                    flowchart LR
+                        U1["👤 User 1"] --> CS["📞 Đội CSKH"]
+                        U2["👤 User 2"] --> CS
+                        U3["👤 User 3"] --> CS
+                        U4["👤 User ..."] --> CS
+                        CS --> DB["🗄️ DB"]
+                        CS --> DB2["🗄️ DB"]
+                        CS --> DB3["🗄️ DB"]
+                        style CS fill:#f44336,color:#fff,stroke:#333
+                        style U1 fill:#607D8B,color:#fff,stroke:#333
+                        style U2 fill:#607D8B,color:#fff,stroke:#333
+                        style U3 fill:#607D8B,color:#fff,stroke:#333
+                        style U4 fill:#607D8B,color:#fff,stroke:#333
+                    </div>
+                </div>
+                <div class="two-col" style="margin-top: 0.4em;">
+                    <div class="highlight-box" style="border-color: #f44336;">
+                        <strong>Quá tải</strong> — CSKH xử lý thủ công mọi ticket, kể cả ticket lặp lại
+                    </div>
+                    <div class="highlight-box" style="border-color: #f44336;">
+                        <strong>Không kiểm soát</strong> — Thay đổi DB trực tiếp, không review
+                    </div>
+                </div>
+                <div class="formula-box" style="margin-top: 0.3em;">
+                    $$\text{Cost} = n_{\text{tickets}} \times t_{\text{avg}} \times c_{\text{nhân viên}} \quad \longrightarrow \quad O(n)$$
+                </div>
+            </section>
+
+            <!-- ============== SLIDE 4: Solution Architecture (diagram) ============== -->
+            <section>
+                <h2>Kiến trúc giải pháp</h2>
+                <div class="mermaid-container">
+                    <div class="mermaid">
+                    graph LR
+                        U["👤 User"] --> FE["🖥️ Chat UI<br/>(React)"]
+                        FE --> BE["⚙️ Backend<br/>(Express)"]
+                        BE --> AI["🤖 AI Agent<br/>(LLM API)"]
+                        AI --> KB["📚 Knowledge<br/>Base (JSON)"]
+                        BE --> DB["🗄️ JSON DB"]
+                        FE --> RV["📝 Review<br/>Diff UI"]
+                        RV --> BE
+                        CSKH["👨‍💼 CSKH"] --> RV
+                        style U fill:#607D8B,color:#fff,stroke:#333
+                        style FE fill:#4CAF50,color:#fff,stroke:#333
+                        style BE fill:#FF9800,color:#fff,stroke:#333
+                        style AI fill:#2196F3,color:#fff,stroke:#333
+                        style KB fill:#9C27B0,color:#fff,stroke:#333
+                        style DB fill:#795548,color:#fff,stroke:#333
+                        style RV fill:#00BCD4,color:#fff,stroke:#333
+                        style CSKH fill:#607D8B,color:#fff,stroke:#333
+                    </div>
+                </div>
+                <table style="margin-top: 0.4em;">
+                    <tr><th>Thành phần</th><th>Vai trò</th></tr>
+                    <tr><td><span class="badge badge-green">Chat UI</span></td><td>Giao diện user chat + hiển thị Diff</td></tr>
+                    <tr><td><span class="badge badge-orange">Backend</span></td><td>REST API, giả lập PR, quản lý DB</td></tr>
+                    <tr><td><span class="badge badge-blue">AI Agent</span></td><td>Phân tích tin nhắn, tra cứu KB, đề xuất giải pháp</td></tr>
+                    <tr><td><span class="badge badge-purple">Knowledge Base</span></td><td>Cơ sở tình huống mẫu — AI học liên tục</td></tr>
+                </table>
+            </section>
+
+            <!-- ============== SLIDE 5: Control Flow Graph ============== -->
+            <section>
+                <h2>Luồng xử lý tổng quan</h2>
+                <div class="mermaid-container">
+                    <div class="mermaid">
+                    flowchart TD
+                        A["👤 User gửi tin nhắn"] --> B["🤖 AI Agent phân tích"]
+                        B --> C{"🔍 Tra cứu KB"}
+                        C -- "Match ✅" --> D["📝 Tạo Mock PR"]
+                        C -- "No match ❌" --> E["📨 Chuyển CSKH"]
+                        D --> F{"👨‍💼 CSKH Review"}
+                        F -- "Approve ✅" --> G["✅ Merge & cập nhật DB"]
+                        F -- "Reject ❌" --> E
+                        E --> H["👨‍💼 Xử lý thủ công"]
+                        H --> G
+                        G --> I["💬 Phản hồi User"]
+                        I --> J["🧠 AI học case mới → KB"]
+                        J -.-> C
+                        style A fill:#607D8B,color:#fff
+                        style B fill:#2196F3,color:#fff
+                        style C fill:#FF9800,color:#fff
+                        style D fill:#9C27B0,color:#fff
+                        style E fill:#FF5722,color:#fff
+                        style F fill:#FF9800,color:#fff
+                        style G fill:#4CAF50,color:#fff
+                        style H fill:#607D8B,color:#fff
+                        style I fill:#4CAF50,color:#fff
+                        style J fill:#3F51B5,color:#fff
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============== SLIDE 6: Sequence - Auto Resolve ============== -->
+            <section>
+                <h2>Luồng Auto-Resolve</h2>
+                <p style="color: #aaa; font-size: 0.65em;">$\text{confidence} > 0.8$ → AI tạo Mock PR → CSKH review Diff</p>
+                <div class="mermaid-container">
+                    <div class="mermaid">
+                    sequenceDiagram
+                        actor User
+                        participant FE as Chat UI
+                        participant BE as Backend
+                        participant AI as AI Agent
+                        participant KB as Knowledge Base
+                        participant CSKH as CSKH
+                        participant DB as JSON DB
+                        User->>FE: Gửi tin nhắn
+                        FE->>BE: POST /api/chat
+                        BE->>AI: analyze_message()
+                        AI->>KB: search_kb()
+                        KB-->>AI: match (conf > 0.8)
+                        AI-->>BE: {reply, db_changes}
+                        BE->>DB: Lưu Mock PR state
+                        BE-->>FE: {status: pending_review, diff}
+                        FE-->>User: Đang chờ duyệt...
+                        CSKH->>FE: Review Diff → Approve
+                        FE->>BE: POST /api/resolve-pr
+                        BE->>DB: Cập nhật DB
+                        BE-->>FE: {status: merged}
+                        FE-->>User: Đã xử lý xong!
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============== SLIDE 7: Sequence - Escalate ============== -->
+            <section>
+                <h2>Luồng Escalate</h2>
+                <p style="color: #aaa; font-size: 0.65em;">$\text{confidence} \leq 0.8$ → Chuyển đội CSKH xử lý thủ công</p>
+                <div class="mermaid-container">
+                    <div class="mermaid">
+                    sequenceDiagram
+                        actor User
+                        participant FE as Chat UI
+                        participant BE as Backend
+                        participant AI as AI Agent
+                        participant KB as Knowledge Base
+                        participant CSKH as CSKH
+                        participant DB as JSON DB
+                        User->>FE: Gửi tin nhắn
+                        FE->>BE: POST /api/chat
+                        BE->>AI: analyze_message()
+                        AI->>KB: search_kb()
+                        KB-->>AI: no match
+                        AI-->>BE: {reply, status: escalated}
+                        BE-->>FE: Chuyển CSKH
+                        FE-->>User: Đang chuyển hỗ trợ...
+                        CSKH->>DB: Xử lý thủ công
+                        CSKH-->>FE: Phản hồi kết quả
+                        FE-->>User: Đã xử lý!
+                        CSKH->>AI: Đẩy case mới
+                        AI->>KB: Cập nhật KB
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============== SLIDE 8: AI Confidence ============== -->
+            <section>
+                <h2>Mô hình AI Confidence</h2>
+                <div class="formula-box">
+                    $$\text{confidence}(q, c) = \frac{|K_q \cap K_c|}{|K_q \cup K_c|}$$
+                    <p style="font-size: 0.65em; color: #aaa; margin: 0.2em 0 0;">
+                        $K_q$: keywords câu hỏi &nbsp;|&nbsp; $K_c$: keywords trong case KB &nbsp;|&nbsp; Jaccard similarity
+                    </p>
+                </div>
+                <div class="two-col" style="margin-top: 0.5em;">
+                    <div class="highlight-box" style="border-color: var(--falcon-green);">
+                        <strong style="color: var(--falcon-green);">$\text{conf} > 0.8$</strong><br/>
+                        → Tạo Mock PR tự động<br/>
+                        → CSKH chỉ cần review Diff
+                    </div>
+                    <div class="highlight-box" style="border-color: var(--falcon-orange);">
+                        <strong style="color: var(--falcon-orange);">$\text{conf} \leq 0.8$</strong><br/>
+                        → Escalate đội CSKH<br/>
+                        → Xử lý thủ công
+                    </div>
+                </div>
+                <div class="formula-box" style="margin-top: 0.4em;">
+                    $$\frac{\text{auto-resolved}}{\text{total}} \xrightarrow{\text{KB grows}} 1 \qquad \Longrightarrow \qquad |KB_{t+1}| = |KB_t| + \Delta_{\text{new cases}}$$
+                    <p style="font-size: 0.6em; color: #aaa; margin: 0.2em 0 0;">Tỉ lệ auto-resolve tăng dần khi Knowledge Base phát triển</p>
+                </div>
+            </section>
+
+            <!-- ============== SLIDE 9: Mock PR Demo ============== -->
+            <section>
+                <h2>Mock Pull Request</h2>
+                <p style="font-size: 0.65em; color: #aaa;">CSKH review thay đổi DB trên giao diện Diff — không cần GitHub</p>
+                <div class="two-col">
+                    <div>
+                        <h3 style="color: #f85149;">Before</h3>
+                        <pre><code class="language-json">{
+  "user_id": "U001",
+  "plan": "basic",
+  "credits": 100
+}</code></pre>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--falcon-green);">After</h3>
+                        <pre><code class="language-json">{
+  "user_id": "U001",
+  "plan": "premium",
+  "credits": 500
+}</code></pre>
+                    </div>
+                </div>
+                <div class="mermaid-container" style="margin-top: 0.3em;">
+                    <div class="mermaid">
+                    flowchart LR
+                        AI["🤖 AI đề xuất<br/>db_changes"] --> PR["📝 Mock PR<br/>(Before/After)"]
+                        PR --> RV{"👨‍💼 CSKH<br/>Review"}
+                        RV -- "Approve ✅" --> DB["🗄️ DB cập nhật"]
+                        RV -- "Reject ❌" --> ESC["📨 Xử lý thủ công"]
+                        style AI fill:#2196F3,color:#fff
+                        style PR fill:#9C27B0,color:#fff
+                        style RV fill:#FF9800,color:#fff
+                        style DB fill:#4CAF50,color:#fff
+                        style ESC fill:#f44336,color:#fff
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============== SLIDE 10: Task Split ============== -->
+            <section>
+                <h2>Phân chia công việc</h2>
+                <div class="mermaid-container">
+                    <div class="mermaid">
+                    graph TB
+                        subgraph lead ["🧭 Phước — AI API + Lead"]
+                            L1["Tích hợp LLM API"]
+                            L2["Knowledge Base"]
+                            L3["Phân chia & review"]
+                        end
+                        subgraph fe ["🎨 Ngọc Anh — Frontend"]
+                            F1["Chat UI"]
+                            F2["Gọi REST API"]
+                            F3["UI Review Diff"]
+                        end
+                        subgraph be ["⚙️ Tuấn Kiệt — Backend"]
+                            B1["Express Server"]
+                            B2["Logic giả lập PR"]
+                            B3["Xử lý escalate"]
+                        end
+                        L1 -. "AI response" .-> B2
+                        F2 -- "POST /api/chat" --> B1
+                        F3 -- "POST /api/resolve-pr" --> B2
+                        B1 -- "analyze_message()" --> L1
+                        style lead fill:rgba(156,39,176,0.15),stroke:#9C27B0,color:#fff
+                        style fe fill:rgba(76,175,80,0.15),stroke:#4CAF50,color:#fff
+                        style be fill:rgba(255,152,0,0.15),stroke:#FF9800,color:#fff
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============== SLIDE 11: API Contract ============== -->
+            <section>
+                <h2>API Contract</h2>
+                <table>
+                    <thead>
+                        <tr><th>Interface</th><th>From → To</th><th>Mô tả</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>POST /api/chat</code></td><td>Frontend → Backend</td><td>Gửi message, nhận AI response + diff</td></tr>
+                        <tr><td><code>POST /api/resolve-pr</code></td><td>Frontend → Backend</td><td>Approve / Reject giả lập PR</td></tr>
+                        <tr><td><code>analyze_message()</code></td><td>Backend → AI Agent</td><td>Gọi function, trả JSON kết quả</td></tr>
+                        <tr><td><code>search_kb()</code></td><td>AI Agent → KB</td><td>Keyword matching trong JSON</td></tr>
+                    </tbody>
+                </table>
+                <div class="mermaid-container" style="margin-top: 0.3em;">
+                    <div class="mermaid">
+                    sequenceDiagram
+                        participant FE as Frontend
+                        participant BE as Backend
+                        participant AI as AI Agent
+
+                        FE->>BE: POST /api/chat {message}
+                        BE->>AI: analyze_message(msg)
+                        AI->>AI: search_kb() + LLM call
+                        AI-->>BE: {reply, confidence, db_changes}
+
+                        alt conf > 0.8
+                            BE-->>FE: {status: pending_review, diff}
+                            FE->>BE: POST /api/resolve-pr {approve}
+                            BE-->>FE: {status: merged}
+                        else conf ≤ 0.8
+                            BE-->>FE: {status: escalated}
+                        end
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============== SLIDE 12: Summary ============== -->
+            <section class="center-slide" data-background-gradient="linear-gradient(135deg, #0d1117 0%, #161b22 50%, #1a1f2e 100%)">
+                <img src="falcon-icon.png" alt="Falcon" style="width: 64px; height: 64px; border-radius: 14px; margin-bottom: 0.2em;" />
+                <h1 style="color: var(--falcon-green); margin-top: 0.1em;">Falcon Supporter</h1>
+                <div class="formula-box" style="max-width: 700px; margin: 0.6em auto;">
+                    $$\boxed{\text{AI Agent} + \text{Mock PR} + \text{Feedback Loop}}$$
+                </div>
+                <div style="max-width: 650px; margin: 0.5em auto; text-align: left;">
+                    <div class="highlight-box" style="border-color: var(--falcon-green);">
+                        <strong>AI tự động</strong> xử lý case quen thuộc → tạo Mock PR → CSKH review Diff
+                    </div>
+                    <div class="highlight-box" style="border-color: var(--falcon-blue);">
+                        <strong>Feedback loop</strong> → AI học từ mỗi case → Knowledge Base ngày càng lớn
+                    </div>
+                    <div class="highlight-box" style="border-color: var(--falcon-orange);">
+                        <strong>Kiến trúc tối giản</strong> — REST API, JSON DB, không over-engineering
+                    </div>
+                </div>
+                <p style="font-size: 0.55em; color: #555; margin-top: 1em;">
+                    <kbd>→</kbd> chuyển slide &bull; <kbd>Esc</kbd> overview &bull; <kbd>F</kbd> fullscreen
+                </p>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- Reveal.js -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+    <!-- KaTeX for LaTeX rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+    <!-- Mermaid for diagrams -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+
+    <script>
+        // Initialize Mermaid with dark theme
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'dark',
+            flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' },
+            sequence: { useMaxWidth: true, mirrorActors: false, messageAlign: 'center' },
+            themeVariables: {
+                darkMode: true,
+                background: 'transparent',
+                primaryColor: '#2196F3',
+                primaryTextColor: '#fff',
+                lineColor: '#888',
+            }
+        });
+
+        async function renderMermaidSlides() {
+            const containers = document.querySelectorAll('.mermaid');
+            for (let i = 0; i < containers.length; i++) {
+                const el = containers[i];
+                const code = el.textContent.trim();
+                const id = 'mermaid-svg-' + i;
+                try {
+                    const { svg } = await mermaid.render(id, code);
+                    el.innerHTML = svg;
+                } catch (e) {
+                    console.warn('Mermaid render error:', e);
+                }
+            }
+        }
+
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'slide',
+            width: 960,
+            height: 700,
+            margin: 0.04,
+            minScale: 0.2,
+            maxScale: 1.5,
+            plugins: [RevealHighlight, RevealNotes],
+        }).then(() => {
+            // Render LaTeX
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                ],
+                throwOnError: false,
+            });
+            // Render Mermaid diagrams
+            renderMermaidSlides();
+        });
+    </script>
+</body>
+</html>

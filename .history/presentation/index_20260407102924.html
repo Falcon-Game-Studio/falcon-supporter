@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Falcon Supporter - Presentation</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/night.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+    <style>
+        :root {
+            --falcon-green: #4CAF50;
+            --falcon-blue: #2196F3;
+            --falcon-orange: #FF9800;
+            --falcon-purple: #9C27B0;
+        }
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: none;
+        }
+        .reveal h1 {
+            font-size: 2.2em;
+        }
+        .reveal h2 {
+            font-size: 1.6em;
+        }
+        .reveal h3 {
+            font-size: 1.2em;
+        }
+        .reveal .slides section {
+            text-align: left;
+        }
+        .reveal .slides section.center-slide {
+            text-align: center;
+        }
+        .reveal ul {
+            font-size: 0.85em;
+        }
+        .reveal li {
+            margin-bottom: 0.4em;
+        }
+        .reveal table {
+            font-size: 0.7em;
+            margin: 0.5em auto;
+        }
+        .reveal table th {
+            background: rgba(255,255,255,0.1);
+        }
+        .reveal table td, .reveal table th {
+            padding: 0.4em 0.8em;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.15em 0.6em;
+            border-radius: 4px;
+            font-size: 0.7em;
+            font-weight: bold;
+            color: #fff;
+            margin-right: 0.3em;
+        }
+        .badge-green { background: var(--falcon-green); }
+        .badge-blue { background: var(--falcon-blue); }
+        .badge-orange { background: var(--falcon-orange); }
+        .badge-purple { background: var(--falcon-purple); }
+        .highlight-box {
+            background: rgba(255,255,255,0.08);
+            border-left: 4px solid var(--falcon-blue);
+            padding: 0.6em 1em;
+            margin: 0.5em 0;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+        .flow-step {
+            display: inline-block;
+            background: rgba(33, 150, 243, 0.2);
+            border: 1px solid var(--falcon-blue);
+            border-radius: 8px;
+            padding: 0.3em 0.7em;
+            margin: 0.2em;
+            font-size: 0.75em;
+        }
+        .team-card {
+            background: rgba(255,255,255,0.06);
+            border-radius: 8px;
+            padding: 0.6em 1em;
+            margin: 0.4em 0;
+            border-left: 4px solid;
+        }
+        .team-a { border-color: var(--falcon-green); }
+        .team-b { border-color: var(--falcon-blue); }
+        .team-c { border-color: var(--falcon-orange); }
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1em;
+        }
+        .formula-box {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px;
+            padding: 0.8em 1.2em;
+            margin: 0.5em 0;
+            text-align: center;
+        }
+        .emoji-icon {
+            font-size: 1.4em;
+            vertical-align: middle;
+        }
+        .reveal .slide-number {
+            font-size: 14px;
+        }
+        .api-box {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            padding: 0.4em 0.8em;
+            margin: 0.3em 0;
+            font-family: monospace;
+            font-size: 0.75em;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- ============== SLIDE 1: Title ============== -->
+            <section class="center-slide" data-background-gradient="linear-gradient(135deg, #0d1117 0%, #161b22 50%, #1a1f2e 100%)">
+                <h1 style="color: var(--falcon-green);">🦅 Falcon Supporter</h1>
+                <h3 style="color: #ccc;">Hệ thống Chăm sóc Khách hàng Thông minh</h3>
+                <p style="font-size: 0.7em; color: #888; margin-top: 1.5em;">
+                    Tích hợp AI Agent &bull; Tự động hóa &bull; Tự học liên tục
+                </p>
+                <p style="font-size: 0.6em; color: #666; margin-top: 2em;">
+                    Falcon Game Studio &mdash; Hackathon Presentation
+                </p>
+            </section>
+
+            <!-- ============== SLIDE 2: Problem ============== -->
+            <section>
+                <h2>😵 Vấn đề hiện tại</h2>
+                <ul>
+                    <li class="fragment">Đội CSKH <strong>quá tải</strong> với các yêu cầu lặp đi lặp lại</li>
+                    <li class="fragment">Thời gian phản hồi <strong>chậm</strong> — khách hàng phải chờ đợi</li>
+                    <li class="fragment">Không có <strong>cơ chế học hỏi</strong> từ các case đã giải quyết</li>
+                    <li class="fragment">Thay đổi DB <strong>không được kiểm soát</strong> — thiếu review</li>
+                </ul>
+                <div class="formula-box fragment">
+                    $$\text{Cost}_{\text{CSKH}} = n_{\text{tickets}} \times t_{\text{avg}} \times c_{\text{nhân viên}}$$
+                    <p style="font-size: 0.7em; color: #aaa;">Chi phí tăng tuyến tính theo số lượng ticket</p>
+                </div>
+            </section>
+
+            <!-- ============== SLIDE 3: Solution ============== -->
+            <section>
+                <h2>💡 Giải pháp: Falcon Supporter</h2>
+                <div class="two-col">
+                    <div>
+                        <div class="highlight-box">
+                            <strong style="color: var(--falcon-green);">🤖 AI Agent</strong><br/>
+                            Tự động chat, nhận diện vấn đề, đề xuất giải pháp dựa trên Knowledge Base
+                        </div>
+                        <div class="highlight-box">
+                            <strong style="color: var(--falcon-orange);">📝 Mock Pull Request</strong><br/>
+                            Mọi thay đổi DB đều qua giao diện Diff review — kiểm soát hoàn toàn
+                        </div>
+                    </div>
+                    <div>
+                        <div class="highlight-box">
+                            <strong style="color: var(--falcon-blue);">🧠 Tự học liên tục</strong><br/>
+                            AI học từ mỗi case resolve, Knowledge Base ngày càng thông minh hơn
+                        </div>
+                        <div class="highlight-box">
+                            <strong style="color: var(--falcon-purple);">⚡ Giảm tải</strong><br/>
+                            Case quen thuộc xử lý tự động, đội CSKH chỉ review hoặc xử lý case mới
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============== SLIDE 4: Architecture ============== -->
+            <section>
+                <h2>🏗️ Kiến trúc hệ thống</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Thành phần</th>
+                            <th>Công nghệ</th>
+                            <th>Vai trò</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="badge badge-green">Page CSKH</span></td>
+                            <td>React</td>
+                            <td>Giao diện chat + UI Review Diff</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge badge-orange">Backend</span></td>
+                            <td>Express.js / FastAPI</td>
+                            <td>REST API, xử lý logic giả lập PR</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge badge-blue">AI Agent</span></td>
+                            <td>LLM API (OpenAI/Claude)</td>
+                            <td>Phân tích tin nhắn, đề xuất giải pháp</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge badge-purple">Knowledge Base</span></td>
+                            <td>JSON file</td>
+                            <td>Cơ sở dữ liệu tình huống mẫu</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="formula-box fragment" style="margin-top: 0.8em;">
+                    <p style="font-size: 0.8em; margin: 0;">
+                        <span class="flow-step">User</span> →
+                        <span class="flow-step">Chat UI</span> →
+                        <span class="flow-step">Backend API</span> →
+                        <span class="flow-step">AI Agent</span> →
+                        <span class="flow-step">Knowledge Base</span>
+                    </p>
+                </div>
+            </section>
+
+            <!-- ============== SLIDE 5: Flow - Auto Resolve ============== -->
+            <section>
+                <h2>✅ Luồng Auto-Resolve</h2>
+                <p style="font-size: 0.75em; color: #aaa;">Khi AI tìm thấy tình huống tương tự trong Knowledge Base</p>
+                <div style="font-size: 0.8em;">
+                    <ol>
+                        <li class="fragment">User gửi tin nhắn mô tả vấn đề</li>
+                        <li class="fragment">AI Agent tra cứu Knowledge Base → <strong>match!</strong></li>
+                        <li class="fragment">AI tạo <strong>Mock PR</strong> với <code>db_changes</code></li>
+                        <li class="fragment">Đội CSKH review trên giao diện <strong>Before/After Diff</strong></li>
+                        <li class="fragment">CSKH ấn <span class="badge badge-green">Approve</span> → DB cập nhật → Phản hồi user</li>
+                    </ol>
+                </div>
+                <div class="highlight-box fragment">
+                    <strong>Điều kiện:</strong>
+                    $$\text{confidence} > 0.8 \implies \text{Auto-resolve (tạo Mock PR)}$$
+                </div>
+            </section>
+
+            <!-- ============== SLIDE 6: Flow - Manual/Escalate ============== -->
+            <section>
+                <h2>📨 Luồng Manual (Escalate)</h2>
+                <p style="font-size: 0.75em; color: #aaa;">Khi AI không tìm thấy case tương tự hoặc confidence thấp</p>
+                <div style="font-size: 0.8em;">
+                    <ol>
+                        <li class="fragment">User gửi tin nhắn → AI không match Knowledge Base</li>
+                        <li class="fragment">Chuyển tiếp sang <strong>hộp thư đội CSKH</strong></li>
+                        <li class="fragment">Đội CSKH xử lý <strong>thủ công</strong> & cập nhật DB</li>
+                        <li class="fragment">Phản hồi kết quả cho user</li>
+                        <li class="fragment"><span class="badge badge-blue">Feedback loop</span> → AI học case mới → Cập nhật KB</li>
+                    </ol>
+                </div>
+                <div class="highlight-box fragment">
+                    <strong>Điều kiện:</strong>
+                    $$\text{confidence} \leq 0.8 \implies \text{Escalate (chuyển CSKH)}$$
+                </div>
+            </section>
+
+            <!-- ============== SLIDE 7: AI Confidence Model ============== -->
+            <section>
+                <h2>🧮 Mô hình AI Confidence</h2>
+                <div class="formula-box">
+                    <p style="margin-bottom: 0.5em;">Confidence score được tính dựa trên độ tương đồng:</p>
+                    $$\text{confidence}(q, c) = \frac{|K_q \cap K_c|}{|K_q \cup K_c|}$$
+                    <p style="font-size: 0.7em; color: #aaa;">
+                        $K_q$: keywords trong câu hỏi user &nbsp;&bull;&nbsp; $K_c$: keywords trong case KB
+                    </p>
+                </div>
+                <div class="two-col fragment" style="margin-top: 0.8em;">
+                    <div class="highlight-box" style="border-color: var(--falcon-green);">
+                        <strong>$\text{conf} > 0.8$</strong><br/>
+                        → Tự động tạo Mock PR<br/>
+                        → CSKH chỉ cần review
+                    </div>
+                    <div class="highlight-box" style="border-color: var(--falcon-orange);">
+                        <strong>$\text{conf} \leq 0.8$</strong><br/>
+                        → Escalate đội CSKH<br/>
+                        → Xử lý thủ công
+                    </div>
+                </div>
+                <div class="formula-box fragment" style="margin-top: 0.5em;">
+                    $$P(\text{auto-resolve}) = \frac{\sum_{i=1}^{N} \mathbb{1}[\text{conf}_i > 0.8]}{N} \xrightarrow{t \to \infty} 1$$
+                    <p style="font-size: 0.65em; color: #aaa;">Tỉ lệ auto-resolve tăng dần khi Knowledge Base phát triển</p>
+                </div>
+            </section>
+
+            <!-- ============== SLIDE 8: API Contract ============== -->
+            <section>
+                <h2>🔌 API Contract</h2>
+                <p style="font-size: 0.75em; color: #aaa;">Tối giản — Chỉ 2 endpoint REST + 2 function calls nội bộ</p>
+                <table>
+                    <thead>
+                        <tr><th>Interface</th><th>From → To</th><th>Mô tả</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="api-box">POST /api/chat</td>
+                            <td>Frontend → Backend</td>
+                            <td>Gửi message, nhận AI response + diff</td>
+                        </tr>
+                        <tr>
+                            <td class="api-box">POST /api/resolve-pr</td>
+                            <td>Frontend → Backend</td>
+                            <td>Approve / Reject giả lập PR</td>
+                        </tr>
+                        <tr>
+                            <td class="api-box">analyze_message()</td>
+                            <td>Backend → AI Agent</td>
+                            <td>Gọi function, trả JSON kết quả</td>
+                        </tr>
+                        <tr>
+                            <td class="api-box">search_kb()</td>
+                            <td>AI Agent → KB</td>
+                            <td>Keyword matching trong JSON file</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- ============== SLIDE 9: Team Split ============== -->
+            <section>
+                <h2>👥 Phân chia Team (Hackathon 1.5h)</h2>
+                <div class="team-card team-a">
+                    <strong style="color: var(--falcon-green);">👤 Person A — Frontend</strong>
+                    <p style="font-size: 0.7em; margin: 0.3em 0 0;">
+                        Chat UI cơ bản &bull; Gọi REST API &bull; Giao diện UI Review (Giả lập PR Diff)
+                    </p>
+                </div>
+                <div class="team-card team-b">
+                    <strong style="color: var(--falcon-blue);">👤 Person B — AI Agent</strong>
+                    <p style="font-size: 0.7em; margin: 0.3em 0 0;">
+                        Knowledge Base JSON &bull; <code>analyze_message()</code> &bull; <code>search_kb()</code>
+                    </p>
+                </div>
+                <div class="team-card team-c">
+                    <strong style="color: var(--falcon-orange);">👤 Person C — Backend</strong>
+                    <p style="font-size: 0.7em; margin: 0.3em 0 0;">
+                        REST API server &bull; Logic giả lập PR &bull; Xử lý case escalate
+                    </p>
+                </div>
+                <div class="formula-box fragment" style="margin-top: 0.6em;">
+                    $$3\ \text{người} \times 3\ \text{tasks} = 9\ \text{tasks tổng cộng}$$
+                    <p style="font-size: 0.65em; color: #aaa;">Mỗi người ~90 phút, giao tiếp qua API contract đã thống nhất</p>
+                </div>
+            </section>
+
+            <!-- ============== SLIDE 10: Mock PR Demo ============== -->
+            <section>
+                <h2>📝 Mock Pull Request — Ý tưởng cốt lõi</h2>
+                <div class="two-col">
+                    <div>
+                        <h3 style="color: #f85149;">Before (Giá trị cũ)</h3>
+                        <pre><code class="language-json">{
+  "user_id": "U001",
+  "plan": "basic",
+  "credits": 100,
+  "status": "active"
+}</code></pre>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--falcon-green);">After (Giá trị mới)</h3>
+                        <pre><code class="language-json">{
+  "user_id": "U001",
+  "plan": "premium",
+  "credits": 500,
+  "status": "active"
+}</code></pre>
+                    </div>
+                </div>
+                <div class="highlight-box fragment" style="margin-top: 0.6em;">
+                    <strong>Tại sao Mock PR?</strong><br/>
+                    <span style="font-size: 0.8em;">
+                        Thay vì dùng GitHub API → Render giao diện Diff <strong>trực tiếp trên web</strong>.<br/>
+                        CSKH review giá trị trước/sau → Ấn <span class="badge badge-green">Approve</span> hoặc <span class="badge" style="background: #f44336;">Reject</span>
+                    </span>
+                </div>
+            </section>
+
+            <!-- ============== SLIDE 11: Feedback Loop ============== -->
+            <section>
+                <h2>🔄 Vòng lặp Feedback & Học tập</h2>
+                <div style="font-size: 0.85em;">
+                    <div class="formula-box">
+                        $$|KB_{t+1}| = |KB_t| + \Delta_{\text{new cases}}$$
+                        <p style="font-size: 0.7em; color: #aaa;">Knowledge Base tăng trưởng sau mỗi case được resolve</p>
+                    </div>
+                    <ul class="fragment">
+                        <li>Mỗi case resolve → Dữ liệu được đẩy cho AI Agent</li>
+                        <li>AI Agent cập nhật Knowledge Base</li>
+                        <li>Case mới trở thành <strong>tình huống mẫu tham chiếu</strong></li>
+                        <li>Lần sau gặp tình huống tương tự → AI tự xử lý</li>
+                    </ul>
+                    <div class="formula-box fragment">
+                        $$\lim_{t \to \infty} \frac{\text{auto-resolved}}{\text{total tickets}} \to 1$$
+                        <p style="font-size: 0.65em; color: #aaa;">Hệ thống ngày càng thông minh, giảm dần sự can thiệp thủ công</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============== SLIDE 12: Tech Stack ============== -->
+            <section>
+                <h2>🛠️ Tech Stack & Nguyên tắc</h2>
+                <div class="two-col">
+                    <div>
+                        <h3>Công nghệ</h3>
+                        <ul style="font-size: 0.75em;">
+                            <li><strong>Frontend:</strong> React</li>
+                            <li><strong>Backend:</strong> Express.js / FastAPI</li>
+                            <li><strong>AI:</strong> LLM API (OpenAI/Claude)</li>
+                            <li><strong>Database:</strong> JSON file</li>
+                            <li><strong>Giao tiếp:</strong> REST API (polling)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Nguyên tắc tối giản</h3>
+                        <ul style="font-size: 0.75em;">
+                            <li>❌ Không WebSocket</li>
+                            <li>❌ Không message queue</li>
+                            <li>❌ Không CI/CD</li>
+                            <li>❌ Không testing riêng</li>
+                            <li>✅ Chỉ REST API đơn giản</li>
+                            <li>✅ Polling để cập nhật</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============== SLIDE 13: Summary ============== -->
+            <section class="center-slide" data-background-gradient="linear-gradient(135deg, #0d1117 0%, #161b22 50%, #1a1f2e 100%)">
+                <h1 style="color: var(--falcon-green);">🦅 Tóm tắt</h1>
+                <div style="font-size: 0.85em; max-width: 700px; margin: 0 auto; text-align: left;">
+                    <div class="highlight-box" style="border-color: var(--falcon-green);">
+                        <strong>AI Agent</strong> tự động xử lý case quen thuộc qua <strong>Mock PR</strong>
+                    </div>
+                    <div class="highlight-box" style="border-color: var(--falcon-blue);">
+                        <strong>CSKH</strong> chỉ review Diff & xử lý case mới
+                    </div>
+                    <div class="highlight-box" style="border-color: var(--falcon-orange);">
+                        <strong>Feedback loop</strong> giúp AI học hỏi liên tục
+                    </div>
+                    <div class="highlight-box" style="border-color: var(--falcon-purple);">
+                        Kiến trúc <strong>tối giản</strong>, phù hợp Hackathon 1.5h
+                    </div>
+                </div>
+                <div class="formula-box" style="margin-top: 1.2em;">
+                    $$\boxed{\text{Falcon Supporter} = \text{AI Agent} + \text{Mock PR} + \text{Feedback Loop}}$$
+                </div>
+                <p style="font-size: 0.6em; color: #666; margin-top: 1.5em;">
+                    Nhấn <kbd>→</kbd> để chuyển slide &bull; <kbd>Esc</kbd> để xem overview &bull; <kbd>F</kbd> để fullscreen
+                </p>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- Reveal.js -->
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+    <!-- KaTeX for LaTeX rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'slide',
+            plugins: [RevealHighlight, RevealNotes],
+        }).then(() => {
+            // Render LaTeX after Reveal.js is ready
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                ],
+                throwOnError: false,
+            });
+        });
+    </script>
+</body>
+</html>
