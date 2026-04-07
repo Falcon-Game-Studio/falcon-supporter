@@ -1,0 +1,14 @@
+{
+  "request_id": "REQ-1775529802522-bs9j",
+  "player_id": "P001",
+  "reply": "Chào bạn DragonSlayer, tôi đã ghi nhận rằng bạn đang thiếu 5000 vàng. Tôi sẽ tiến hành hoàn trả số vàng này cho bạn ngay lập tức.",
+  "confidence": 0.9,
+  "db_changes": {
+    "player_id": "P001",
+    "field": "gold",
+    "before": 15500,
+    "after": 20500,
+    "reason": "Hoàn trả vàng bị mất"
+  },
+  "responded_at": "2026-04-07T02:44:56.623Z"
+}

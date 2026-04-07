@@ -20,5 +20,27 @@
     "reason": "Hoàn trả 500 vàng do nạp tiền nhưng chưa nhận được",
     "status": "merged",
     "created_at": "2026-04-06T17:27:44.936Z"
+  },
+  {
+    "review_id": "R003",
+    "request_id": "REQ-1775529802522-bs9j",
+    "player_id": "P001",
+    "field": "gold",
+    "before": 15500,
+    "after": 20500,
+    "reason": "Hoàn trả vàng bị mất",
+    "status": "pending",
+    "created_at": "2026-04-07T02:44:59.515Z"
+  },
+  {
+    "review_id": "R004",
+    "request_id": "REQ-1775529923705-x7ic",
+    "player_id": "P001",
+    "field": "gold",
+    "before": 15500,
+    "after": 20500,
+    "reason": "Hoàn trả 5000 vàng bị thiếu",
+    "status": "merged",
+    "created_at": "2026-04-07T02:45:31.658Z"
   }
 ]

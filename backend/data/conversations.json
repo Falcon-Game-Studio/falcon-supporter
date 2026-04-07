@@ -70,6 +70,33 @@
       "message": "Chào bạn DragonSlayer, tôi đã ghi nhận rằng bạn đã nạp tiền nhưng chưa nhận được 500 vàng. Tôi sẽ kiểm tra giao dịch và hoàn trả cho bạn số vàng này.",
       "request_id": "REQ-1775496458886-g5xj",
       "timestamp": "2026-04-06T17:27:43.502Z"
+    },
+    {
+      "role": "user",
+      "message": "thiếu 5000 vàng rồi",
+      "timestamp": "2026-04-07T02:41:28.462Z"
+    },
+    {
+      "role": "user",
+      "message": "thiếu 5000 vàng rồi",
+      "timestamp": "2026-04-07T02:43:22.521Z"
+    },
+    {
+      "role": "ai",
+      "message": "Chào bạn DragonSlayer, tôi đã ghi nhận rằng bạn đang thiếu 5000 vàng. Tôi sẽ tiến hành hoàn trả số vàng này cho bạn ngay lập tức.",
+      "request_id": "REQ-1775529802522-bs9j",
+      "timestamp": "2026-04-07T02:44:56.623Z"
+    },
+    {
+      "role": "user",
+      "message": "thiếu 5000 vàng rồi",
+      "timestamp": "2026-04-07T02:45:23.704Z"
+    },
+    {
+      "role": "ai",
+      "message": "Chào bạn DragonSlayer, tôi đã ghi nhận rằng bạn đang thiếu 5000 vàng. Tôi sẽ tiến hành hoàn trả số vàng này cho bạn.",
+      "request_id": "REQ-1775529923705-x7ic",
+      "timestamp": "2026-04-07T02:45:30.373Z"
     }
   ]
 }
