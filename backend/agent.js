@@ -1,43 +1,20 @@
 /**
  * Falcon Supporter — AI Agent (Heartbeat Worker)
  *
- * Script này chạy liên tục, quét folder queue/requests/ mỗi 3 giây.
- * Khi phát hiện request mới (chưa có response tương ứng), nó sẽ:
- *   1. Đọc request file + Knowledge Base + player data
+ * Script này chạy liên tục, quét MongoDB collection `requests` mỗi 3 giây.
+ * Khi phát hiện request mới (status: 'pending'), nó sẽ:
+ *   1. Đọc request + Knowledge Base + player data từ MongoDB
  *   2. Gọi GitHub Copilot LLM (GitHub Models API) để phân tích
  *   3. Parse structured JSON response từ LLM
- *   4. Ghi response file vào queue/responses/
+ *   4. Cập nhật request doc trong MongoDB với kết quả
  *
  * Cần: GITHUB_TOKEN (Personal Access Token) trong file .env
  * Khởi chạy: node agent.js   (hoặc qua run.bat / npm run dev)
  */
 
-const fs = require('fs');
-const path = require('path');
-
-const DATA_DIR = path.join(__dirname, 'data');
-const QUEUE_DIR = path.join(DATA_DIR, 'queue');
-const REQ_DIR = path.join(QUEUE_DIR, 'requests');
-const RES_DIR = path.join(QUEUE_DIR, 'responses');
+require('dotenv').config();
+const { connectDB, KnowledgeBase, Request } = require('./db');
 const POLL_MS = 3000;
-
-// ========== Load .env ==========
-
-function loadEnv() {
-  const envPath = path.join(__dirname, '.env');
-  if (!fs.existsSync(envPath)) return;
-  const lines = fs.readFileSync(envPath, 'utf-8').split('\n');
-  for (const line of lines) {
-    const trimmed = line.trim();
-    if (!trimmed || trimmed.startsWith('#')) continue;
-    const idx = trimmed.indexOf('=');
-    if (idx === -1) continue;
-    const key = trimmed.slice(0, idx).trim();
-    const val = trimmed.slice(idx + 1).trim().replace(/^["']|["']$/g, '');
-    if (!process.env[key]) process.env[key] = val;
-  }
-}
-loadEnv();
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const MODEL = process.env.COPILOT_MODEL || 'gpt-4o-mini';
@@ -45,13 +22,8 @@ const API_URL = 'https://models.inference.ai.azure.com/chat/completions';
 
 // ========== Helpers ==========
 
-function readJSON(filepath) {
-  const raw = fs.readFileSync(filepath, 'utf-8');
-  return JSON.parse(raw.replace(/^\uFEFF/, ''));
-}
-
-function loadKB() {
-  return readJSON(path.join(DATA_DIR, 'knowledge_base.json'));
+async function loadKB() {
+  return KnowledgeBase.find({}).lean();
 }
 
 // ========== Build LLM Prompt ==========
@@ -99,8 +71,8 @@ Nếu không cần thay đổi DB, set db_changes = null.
 CHỈ trả về JSON thuần, KHÔNG bọc trong code block hay markdown.`;
 }
 
-function buildKBContext() {
-  const kb = loadKB();
+async function buildKBContext() {
+  const kb = await loadKB();
   return kb.map(entry =>
     `- [${entry.id}] Keywords: ${entry.keywords.join(', ')} → Problem: ${entry.problem} → Solution: ${entry.solution} → Changes: ${JSON.stringify(entry.db_changes)}`
   ).join('\n');
@@ -151,35 +123,34 @@ function parseLLMResponse(raw) {
 
 // ========== Process a single request ==========
 
-async function processRequest(reqFile) {
-  const reqPath = path.join(REQ_DIR, reqFile);
-  const resPath = path.join(RES_DIR, reqFile);
-
-  const request = readJSON(reqPath);
-  const { message, player_data } = request;
+async function processRequest(request) {
+  const { message, player_data, request_id } = request;
 
   console.log(`  📨 Message: "${message}"`);
   console.log(`  👤 Player: ${player_data.username} (${player_data.id})`);
 
-  const kbContext = buildKBContext();
+  const kbContext = await buildKBContext();
   const systemPrompt = buildSystemPrompt(player_data, kbContext);
 
   console.log(`  🤖 Calling GitHub Copilot LLM (${MODEL})...`);
   const rawResponse = await callLLM(systemPrompt, message);
   const analysis = parseLLMResponse(rawResponse);
 
-  // Build response file
-  const response = {
-    request_id: request.request_id,
-    player_id: request.player_id,
-    reply: analysis.reply,
-    confidence: analysis.confidence,
-    db_changes: analysis.db_changes || null,
-    responded_at: new Date().toISOString(),
-  };
+  // Update request document with response
+  await Request.findOneAndUpdate(
+    { request_id },
+    {
+      $set: {
+        reply: analysis.reply,
+        confidence: analysis.confidence,
+        db_changes: analysis.db_changes || null,
+        status: 'completed',
+        responded_at: new Date().toISOString(),
+      },
+    },
+  );
 
-  fs.writeFileSync(resPath, JSON.stringify(response, null, 2));
-  console.log(`  ✅ Response written → confidence: ${analysis.confidence}`);
+  console.log(`  ✅ Response saved → confidence: ${analysis.confidence}`);
   if (analysis.db_changes) {
     console.log(`  📋 Mock PR: ${analysis.db_changes.field} ${analysis.db_changes.before} → ${analysis.db_changes.after}`);
   }
@@ -196,28 +167,38 @@ async function heartbeat() {
   processing = true;
 
   try {
-    const reqFiles = fs.readdirSync(REQ_DIR).filter(f => f.endsWith('.json'));
-    const resFiles = new Set(fs.readdirSync(RES_DIR).filter(f => f.endsWith('.json')));
+    const pending = await Request.find({
+      status: 'pending',
+      request_id: { $nin: [...failedRequests] },
+    }).lean();
 
-    const pending = reqFiles.filter(f => !resFiles.has(f) && !failedRequests.has(f));
-
-    for (const reqFile of pending) {
-      console.log(`🔔 Processing: ${reqFile}`);
+    for (const request of pending) {
+      console.log(`🔔 Processing: ${request.request_id}`);
+      // Mark as processing to prevent duplicate pickup
+      await Request.findOneAndUpdate(
+        { request_id: request.request_id, status: 'pending' },
+        { $set: { status: 'processing' } },
+      );
       try {
-        await processRequest(reqFile);
+        await processRequest(request);
       } catch (err) {
         console.error(`  ❌ Error: ${err.message}`);
         if (err.message.includes('401') || err.message.includes('403')) {
           console.error('  ⛔ Token không hợp lệ. Hãy kiểm tra GITHUB_TOKEN trong backend/.env');
           console.error('  ⏸  Tạm dừng request này. Restart agent sau khi sửa token.\n');
-          failedRequests.add(reqFile);
+          failedRequests.add(request.request_id);
         } else {
           console.error('  🔁 Sẽ thử lại lần sau.\n');
         }
+        // Revert to pending so it can be retried
+        await Request.findOneAndUpdate(
+          { request_id: request.request_id },
+          { $set: { status: 'pending' } },
+        );
       }
     }
   } catch (err) {
-    if (err.code !== 'ENOENT') console.error('Heartbeat error:', err.message);
+    console.error('Heartbeat error:', err.message);
   } finally {
     processing = false;
   }
@@ -228,8 +209,6 @@ async function heartbeat() {
 console.log('================================================');
 console.log(' 🦅 Falcon Supporter — AI Agent (GitHub Copilot)');
 console.log('================================================');
-console.log(`📂 Watching: ${REQ_DIR}`);
-console.log(`📂 Writing:  ${RES_DIR}`);
 console.log(`🤖 Model:    ${MODEL}`);
 console.log(`⏱  Poll:     ${POLL_MS}ms`);
 
@@ -247,12 +226,11 @@ if (!GITHUB_TOKEN) {
 console.log(`🔑 Token:    ${GITHUB_TOKEN.slice(0, 8)}...${GITHUB_TOKEN.slice(-4)}`);
 console.log('');
 
-// Process any existing pending requests immediately
-heartbeat();
-
-// Then poll continuously
-setInterval(heartbeat, POLL_MS);
-
-console.log('🟢 Agent is running. Waiting for requests...');
-console.log('   Press Ctrl+C to stop.');
-console.log('');
+// Connect to MongoDB, then start heartbeat
+connectDB().then(() => {
+  heartbeat();
+  setInterval(heartbeat, POLL_MS);
+  console.log('🟢 Agent is running. Waiting for requests...');
+  console.log('   Press Ctrl+C to stop.');
+  console.log('');
+});

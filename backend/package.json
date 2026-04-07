@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "seed": "node seed.js"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.4.1",
     "express": "^4.21.0",
-    "cors": "^2.8.5"
+    "mongoose": "^9.4.1"
   }
 }
